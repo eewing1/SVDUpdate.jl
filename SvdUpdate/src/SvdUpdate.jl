@@ -19,8 +19,8 @@ function totalbrand3(F::SVD,A,B)
         #we obtain an error bound relative to the largest singular value (multiplied by ϵₘ)
         σ₁=F.S[1]
         ϵₘ=eps()
-
         ê=σ₁*ϵₘ
+        
         r=findall(F.S.<ê)
         if isempty(r)
             r=size(F.U,2)
@@ -41,7 +41,7 @@ function totalbrand3(F::SVD,A,B)
         # compare this to something!!!!!!!!
         
         #avoid the case where if Rₐ is very small, you divide p by almost zero to obtain a odd Qₐ or Qᵦ
-        if Rₐ<σ₁*ϵₘ
+        if Rₐ<ê
             Qₐ=Matrix{Float64}(undef,size(U,1),0)
         else
             Qₐ=(1/Rₐ)*p
@@ -50,7 +50,7 @@ function totalbrand3(F::SVD,A,B)
         n=Vᵣ'*B
         q=B-Vᵣ*n
         Rᵦ=norm(q)
-        if Rᵦ<σ₁*ϵₘ
+        if Rᵦ<ê
             Qᵦ=Matrix{Float64}(undef,size(V,1),0)
         else
             Qᵦ=(1/Rᵦ)*q
@@ -65,13 +65,13 @@ function totalbrand3(F::SVD,A,B)
         K=[K₁ K₂;K₃ K₄]
     
         #remove redundant tiny rows/columns of the matrix K to fit the dimensions needed
-        if Rₐ<σ₁*ϵₘ && Rᵦ<σ₁*ϵₘ
+        if Rₐ<ê && Rᵦ<ê
             mₖ,nₖ=size(K)
             K=K[1:(mₖ-1),1:(nₖ-1)]
-        elseif Rᵦ<σ₁*ϵₘ
+        elseif Rᵦ<ê
             nₖ=size(K,2)
             K=K[:,1:(nₖ-1)]
-        elseif Rₐ<σ₁*ϵₘ
+        elseif Rₐ<ê
             mₖ=size(K,1)
             K=K[1:(mₖ-1),:]
         end
@@ -90,6 +90,7 @@ function totalbrand3(F::SVD,A,B)
         
         σ₁=F.S[1]
         ϵₘ=eps()
+        ê=σ₁*ϵₘ
 
         #remove all the left/right sing. vectors that have tiny sing. values
         #r=minimum(findall(svd(X).S.<10^-10
@@ -127,8 +128,8 @@ function totalbrand3(F::SVD,A,B)
         Rₐ₁=diag(Rₐ)
         Rₐ₂=diag(Rᵦ)
     
-        rₐ₁=size((findall(Rₐ₁.<σ₁*ϵₘ)),1)
-        rₐ₂=size((findall(Rₐ₂.<σ₁*ϵₘ)),1)
+        rₐ₁=size((findall(Rₐ₁.<ê)),1)
+        rₐ₂=size((findall(Rₐ₂.<ê)),1)
     
         mₖ,nₖ=size(K)
         K=K[1:(mₖ-rₐ₁),1:(nₖ-rₐ₂)]
@@ -153,9 +154,6 @@ function totalbrand3(F::SVD,A,B)
 
         #compute the SVD of K
         Uₖ,Sₖ,Vₖ=svd(K)
-        #ensure Sigma matrix is diagonal and not just a vector
-        #ensure Sigma is a diagonal and sparse matrix
-
         
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ));
     end
