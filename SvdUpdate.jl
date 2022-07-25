@@ -107,9 +107,9 @@ function totalbrand3(F::SVD,A,B)
         Vᵣ=V[:,1:r]
         Sᵣ=S[1:r,1:r]
 
-        #compute the Q, R matrices
-        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
-        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B)
+        #perform pivoted QR Decomposition
+        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
+        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B, ColumnNorm())
 
         #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
         #the Q that is returned by the qr function is not what we're looking for
@@ -162,5 +162,4 @@ function totalbrand3(F::SVD,A,B)
        # X̃.S=Sₖ
        # X̃==[Vᵣ Qᵦ]*Vₖ
     end
-end
 end
