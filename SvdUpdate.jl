@@ -154,7 +154,7 @@ function totalbrand3(F::SVD,A,B)
         #compute the SVD of K
         Uₖ,Sₖ,Vₖ=svd(K)
         #ensure Sigma matrix is diagonal and not just a vector
-        #ensure Simgma is a diagonal and sparse matrix
+        #ensure Sigma is a diagonal and sparse matrix
 
         
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ));
