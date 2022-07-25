@@ -158,3 +158,5 @@ function totalbrand3(F::SVD,A,B)
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ));
     end
 end
+
+end # module

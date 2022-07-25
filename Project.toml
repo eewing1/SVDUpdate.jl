@@ -3,6 +3,10 @@ uuid = "5197d5ce-7e41-4e8c-9a1e-8970cc3c81fb"
 authors = ["Evan Ewing"]
 version = "0.1.0"
 
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
 [compat]
 julia = "1"
 
