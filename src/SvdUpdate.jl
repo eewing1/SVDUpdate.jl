@@ -4,7 +4,7 @@ module SvdUpdate
 
 using LinearAlgebra
 using SparseArrays
-function totalbrand3(F::SVD,A,B)
+function totalbrand6(F::SVD,A,B)
     A=A[:,:]
     B=B[:,:]
 
@@ -94,7 +94,7 @@ function totalbrand3(F::SVD,A,B)
 
         #remove all the left/right sing. vectors that have tiny sing. values
         #r=minimum(findall(svd(X).S.<10^-10
-        r=findall(F.S.<σ₁*ϵₘ)
+        r=findall(F.S.<ê)
 
         #test if matrix is rank deficient or full rank
         #r is an array of singular values that are TINY
@@ -109,8 +109,8 @@ function totalbrand3(F::SVD,A,B)
         Sᵣ=S[1:r,1:r]
 
         #compute the Q, R matrices
-        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
-        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B,ColumnNorm())
+        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
+        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B)
 
         #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
         #the Q that is returned by the qr function is not what we're looking for
@@ -125,8 +125,8 @@ function totalbrand3(F::SVD,A,B)
         K=[K₁ K₂;K₃ K₄]
 
 
-        Rₐ₁=diag(Rₐ)
-        Rₐ₂=diag(Rᵦ)
+        Rₐ₁=abs.(diag(Rₐ))
+        Rₐ₂=abs.(diag(Rᵦ))
     
         rₐ₁=size((findall(Rₐ₁.<ê)),1)
         rₐ₂=size((findall(Rₐ₂.<ê)),1)
@@ -134,8 +134,8 @@ function totalbrand3(F::SVD,A,B)
         mₖ,nₖ=size(K)
         K=K[1:(mₖ-rₐ₁),1:(nₖ-rₐ₂)]
     
-        qₐ=size(Qₐ,2)
-        qᵦ=size(Qᵦ,2)
+        qₐ=size(Matrix(Qₐ),2)
+        qᵦ=size(Matrix(Qᵦ),2)
         
     
         if qₐ==rₐ₁
@@ -158,5 +158,7 @@ function totalbrand3(F::SVD,A,B)
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ));
     end
 end
+
+
 
 end # module
