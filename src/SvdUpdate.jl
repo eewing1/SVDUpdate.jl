@@ -124,16 +124,19 @@ function totalbrand6(F::SVD,A,B)
         K₄=Rₐ*Rᵦ'
         K=[K₁ K₂;K₃ K₄]
 
-
+        #build arrays whose entries are diagonals of Ra,Rb
         Rₐ₁=abs.(diag(Rₐ))
         Rₐ₂=abs.(diag(Rᵦ))
     
+        #size of the array Ra, Rb
         rₐ₁=size((findall(Rₐ₁.<ê)),1)
         rₐ₂=size((findall(Rₐ₂.<ê)),1)
-    
+        
+        #find dimensions of K, truncate K
         mₖ,nₖ=size(K)
         K=K[1:(mₖ-rₐ₁),1:(nₖ-rₐ₂)]
     
+        #number of columns of Qa, Qb
         qₐ=size(Matrix(Qₐ),2)
         qᵦ=size(Matrix(Qᵦ),2)
         
