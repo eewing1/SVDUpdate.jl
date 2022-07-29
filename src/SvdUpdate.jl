@@ -80,7 +80,7 @@ function totalbrand6(F::SVD,A,B)
         #compute the SVD of K, which gives us Uₖ, Σₖ, Vₖ
         Uₖ, Sₖ,Vₖ=svd(K)
         
-        SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ))
+        SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ)')
 
     else
    
@@ -158,7 +158,7 @@ function totalbrand6(F::SVD,A,B)
         #compute the SVD of K
         Uₖ,Sₖ,Vₖ=svd(K)
         
-        SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ));
+        SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ)');
     end
 end
 
