@@ -109,8 +109,8 @@ function totalbrand6(F::SVD,A,B)
         Sᵣ=S[1:r,1:r]
 
         #compute the Q, R matrices
-        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
-        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B)
+        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
+        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B, ColumnNorm())
 
         #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
         #the Q that is returned by the qr function is not what we're looking for
