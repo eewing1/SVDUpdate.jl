@@ -109,8 +109,10 @@ function totalbrand6(F::SVD,A,B)
         Sᵣ=S[1:r,1:r]
 
         #compute the Q, R matrices
-        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
-        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B, ColumnNorm())
+        Qₐ,Rₐ,Pₐ=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
+        Â=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
+        Qᵦ,Rᵦ,Pᵦ=qr(B-Vᵣ*Vᵣ'*B,ColumnNorm())
+        B̂=qr(B-Vᵣ*Vᵣ'*B,ColumnNorm())
 
         #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
         #the Q that is returned by the qr function is not what we're looking for
@@ -119,9 +121,9 @@ function totalbrand6(F::SVD,A,B)
     
         #build the K matrix
         K₁=Sᵣ+Uᵣ'*A*B'*Vᵣ
-        K₂=Uᵣ'*A*Rᵦ'
-        K₃=Rₐ*B'*Vᵣ
-        K₄=Rₐ*Rᵦ'
+        K₂=Uᵣ'*A*(Rᵦ*B̂.P')'
+        K₃=(Rₐ*Â.P')*B'*Vᵣ
+        K₄=(Rₐ*Â.P')*(Rᵦ*B̂.P')'
         K=[K₁ K₂;K₃ K₄]
 
         #build arrays whose entries are diagonals of Ra,Rb
@@ -161,7 +163,6 @@ function totalbrand6(F::SVD,A,B)
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ)');
     end
 end
-
 
 
 end # module
