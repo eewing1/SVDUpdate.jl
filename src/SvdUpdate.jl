@@ -1,9 +1,6 @@
 module SvdUpdate
 
 # Write your package code here.
-
-using LinearAlgebra
-using SparseArrays
 function svdupdate(F::SVD, A, B)
     A=A[:,:]
     B=B[:,:]
@@ -38,7 +35,6 @@ function svdupdate(F::SVD, A, B)
         m=Uᵣ'*A
         p=(A-Uᵣ*m)
         Rₐ=norm(p)
-        # compare this to something!!!!!!!!
         
         #avoid the case where if Rₐ is very small, you divide p by almost zero to obtain a odd Qₐ or Qᵦ
         if Rₐ<ê
