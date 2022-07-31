@@ -54,4 +54,15 @@ using Test
     L̂=svd(L₁)
     L̃=totalbrand6(L̂,L₂,L₃)
     @test L̃.U*Diagonal(L̃.S)*L̃.V'≈L₁+L₂*L₃'
+    
+    #Test Case 6: Update to Tall Rank Deficient Matrix
+    m=110;n=70;r=90
+    p=40
+    J₁=rand(Complex{Float64},m,r)*rand(Complex{Float64},r,n)
+    J₂=rand(Complex{Float64},m,p)
+    J₃=rand(Complex{Float64},n,p)
+    Ĵ=svd(J₁)
+    J̃=totalbrand6(Ĵ,J₂,J₃)
+    @test J̃.U*Diagonal(J̃.S)*J̃.V'≈J₁+J₂*J₃'    
+
 end
