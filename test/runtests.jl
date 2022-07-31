@@ -16,7 +16,7 @@ using Test
     Y₂=rand(Complex{Float64},150,30)
     Y₃=rand(Complex{Float64},150,30)
     Ŷ=svd(Y₁)
-    Ỹ=totalbrand6(Ŷ,Y₂,Y₃)
+    Ỹ=svdupdate(Ŷ,Y₂,Y₃)
     @test Ỹ.U*Diagonal(Ỹ.S)*Ỹ.V'≈Y₁+Y₂*Y₃'
     
     #Test Case 2: Update to Positive Definite Matrix
@@ -27,7 +27,7 @@ using Test
     E₂=rand(m,p)
     E₃=rand(n,p)
     Ê=svd(E₁)
-    Ẽ=totalbrand6(Ê,E₂,E₃)
+    Ẽ=svdupdate(Ê,E₂,E₃)
     @test Ẽ.U*Diagonal(Ẽ.S)*Ẽ.V'≈E₁+E₂*E₃'
     
     #Test Case 3: Update to Full Rank Square Matrix
@@ -37,7 +37,7 @@ using Test
     Z₂=rand(Complex{Float64},m,p)
     Z₃=rand(Complex{Float64},n,p)
     Ẑ=svd(Z₁)
-    Z̃=totalbrand6(Ẑ,Z₂,Z₃)
+    Z̃=svdupdate(Ẑ,Z₂,Z₃)
     @test Z̃.U*Diagonal(Z̃.S)*Z̃.V'≈Z₁+Z₂*Z₃'
     
     #Test Case 4: Update to Hermitian Matrix
@@ -47,7 +47,7 @@ using Test
     T₂=rand(m,p)
     T₃=rand(n,p)
     T̂=svd(T₁)
-    T̃=totalbrand6(T̂,T₂,T₃)
+    T̃=svdupdate(T̂,T₂,T₃)
     @test T̃.U*Diagonal(T̃.S)*T̃.V'≈T₁+T₂*T₃'
     
     #Test Case 5: Update to Square Rank Deficient Matrix
@@ -57,7 +57,7 @@ using Test
     L₂=rand(m,p)
     L₃=rand(n,p)
     L̂=svd(L₁)
-    L̃=totalbrand6(L̂,L₂,L₃)
+    L̃=svdupdate(L̂,L₂,L₃)
     @test L̃.U*Diagonal(L̃.S)*L̃.V'≈L₁+L₂*L₃'
     
     #Test Case 6: Update to Tall Rank Deficient Matrix
@@ -67,7 +67,7 @@ using Test
     J₂=rand(Complex{Float64},m,p)
     J₃=rand(Complex{Float64},n,p)
     Ĵ=svd(J₁)
-    J̃=totalbrand6(Ĵ,J₂,J₃)
+    J̃=svdupdate(Ĵ,J₂,J₃)
     @test J̃.U*Diagonal(J̃.S)*J̃.V'≈J₁+J₂*J₃'    
     
     #Test Case 7: Update to Tall Full Rank Matrix
@@ -77,6 +77,6 @@ using Test
     W₂=rand(Complex{Float64},m,p)
     W₃=rand(Complex{Float64},n,p)
     Ŵ=svd(W₁)
-    W̃=totalbrand6(Ŵ,W₂,W₃)
+    W̃=svdupdate(Ŵ,W₂,W₃)
     @test W̃.U*Diagonal(W̃.S)*W̃.V'≈W₁+W₂*W₃'
 end
