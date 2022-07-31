@@ -1,6 +1,11 @@
 using SvdUpdate
 using Test
 
+#m=number of rows
+#n=number of columns
+#r=rank of matrix undergoing update
+#p=rank of the update matrix
+
 @testset "SvdUpdate.jl" begin
     #Write your tests here.
     #Test Case 1: Update to Square Rank Deficient Matrix
