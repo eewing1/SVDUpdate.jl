@@ -69,5 +69,14 @@ using Test
     Ĵ=svd(J₁)
     J̃=totalbrand6(Ĵ,J₂,J₃)
     @test J̃.U*Diagonal(J̃.S)*J̃.V'≈J₁+J₂*J₃'    
-
+    
+    #Test Case 7: Update to Tall Full Rank Matrix
+    m=170;n=100;r=100
+    p=15
+    W₁=rand(Complex{Float64},m,n)
+    W₂=rand(Complex{Float64},m,p)
+    W₃=rand(Complex{Float64},n,p)
+    Ŵ=svd(W₁)
+    W̃=totalbrand6(Ŵ,W₂,W₃)
+    @test W̃.U*Diagonal(W̃.S)*W̃.V'≈W₁+W₂*W₃'
 end
