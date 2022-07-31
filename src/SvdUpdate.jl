@@ -4,7 +4,7 @@ module SvdUpdate
 
 using LinearAlgebra
 using SparseArrays
-function totalbrand6(F::SVD, A, B)
+function svdupdate(F::SVD, A, B)
     A=A[:,:]
     B=B[:,:]
 
@@ -161,7 +161,4 @@ function totalbrand6(F::SVD, A, B)
         SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ)');
     end
 end
-
-
-
 end # module
