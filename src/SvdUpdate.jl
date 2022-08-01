@@ -1,7 +1,6 @@
 module SvdUpdate
 
-# Write your package code here.
-function svdupdate(F::SVD, A, B)
+# Write your package code here.function totalbrand6(F::SVD,A,B)
     A=A[:,:]
     B=B[:,:]
 
@@ -35,6 +34,7 @@ function svdupdate(F::SVD, A, B)
         m=Uᵣ'*A
         p=(A-Uᵣ*m)
         Rₐ=norm(p)
+        # compare this to something!!!!!!!!
         
         #avoid the case where if Rₐ is very small, you divide p by almost zero to obtain a odd Qₐ or Qᵦ
         if Rₐ<ê
@@ -105,24 +105,24 @@ function svdupdate(F::SVD, A, B)
         Sᵣ=S[1:r,1:r]
 
         #compute the Q, R matrices
-        Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
-        Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B)
+        Â=qr(A-Uᵣ*Uᵣ'*A, ColumnNorm())
+        B̂=qr(B-Vᵣ*Vᵣ'*B, ColumnNorm())
 
         #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
         #the Q that is returned by the qr function is not what we're looking for
-        Qₐ=Matrix(Qₐ)
-        Qᵦ=Matrix(Qᵦ)
+        Qₐ=Matrix(Â.Q)
+        Qᵦ=Matrix(B̂.Q)
     
         #build the K matrix
         K₁=Sᵣ+Uᵣ'*A*B'*Vᵣ
-        K₂=Uᵣ'*A*Rᵦ'
-        K₃=Rₐ*B'*Vᵣ
-        K₄=Rₐ*Rᵦ'
+        K₂=Uᵣ'*A*(B̂.R*B̂.P')'
+        K₃=(Â.R*Â.P')*B'*Vᵣ
+        K₄=(Â.R*Â.P')*(B̂.R*B̂.P')'
         K=[K₁ K₂;K₃ K₄]
 
         #build arrays whose entries are diagonals of Ra,Rb
-        Rₐ₁=abs.(diag(Rₐ))
-        Rₐ₂=abs.(diag(Rᵦ))
+        Rₐ₁=abs.(diag(Â.R))
+        Rₐ₂=abs.(diag(B̂.R))
     
         #size of the array Ra, Rb
         rₐ₁=size((findall(Rₐ₁.<ê)),1)
@@ -133,8 +133,8 @@ function svdupdate(F::SVD, A, B)
         K=K[1:(mₖ-rₐ₁),1:(nₖ-rₐ₂)]
     
         #number of columns of Qa, Qb
-        qₐ=size(Matrix(Qₐ),2)
-        qᵦ=size(Matrix(Qᵦ),2)
+        qₐ=size(Qₐ,2)
+        qᵦ=size(Qᵦ,2)
         
     
         if qₐ==rₐ₁
