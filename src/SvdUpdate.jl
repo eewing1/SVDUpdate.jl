@@ -1,5 +1,6 @@
 module SvdUpdate
 
+using LinearAlgebra
 # Write your package code here.
 function svdupdate(F::SVD, A, B)
     A=A[:,:]
