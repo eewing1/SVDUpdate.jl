@@ -12,9 +12,9 @@ using Test
     m = 70; n = 70
     p = 10
     r = 5
-    Y₁=rand(Complex{Float64},150,120)*rand(Complex{Float64},120,150)
-    Y₂=rand(Complex{Float64},150,30)
-    Y₃=rand(Complex{Float64},150,30)
+    Y₁=rand(Complex{Float64},m,r)*rand(Complex{Float64},r,n)
+    Y₂=rand(Complex{Float64},m,p)
+    Y₃=rand(Complex{Float64},n,p)
     Ŷ=svd(Y₁)
     Ỹ=svdupdate(Ŷ,Y₂,Y₃)
     @test Ỹ.U*Diagonal(Ỹ.S)*Ỹ.V'≈Y₁+Y₂*Y₃'
