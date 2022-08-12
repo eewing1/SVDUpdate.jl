@@ -3,10 +3,6 @@ module SvdUpdate
 using LinearAlgebra
 # Write your package code here.
 function svdupdate(F::SVD, A, B)
-    A=A[:,:]
-    B=B[:,:]
-
-   
     U=F.U
     S=Diagonal(F.S)
     V=F.V
