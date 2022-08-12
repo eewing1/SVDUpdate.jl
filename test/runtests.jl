@@ -80,3 +80,19 @@ using Test
     W̃=svdupdate(Ŵ,W₂,W₃)
     @test W̃.U*Diagonal(W̃.S)*W̃.V'≈W₁+W₂*W₃'
 end
+
+#Creation of High Condition Number Matrices
+C=rand(m,n)
+C[:,n]=C[:,1]+1e-10*ones(m)
+#this creates a matrix that is "Almost" rank deficient with a HUGE condition number
+#make the final column "Almost" equal to the first column by redefining it to the first column plus a very tiny offset O(1e-10)
+
+
+
+
+
+
+
+
+
+
