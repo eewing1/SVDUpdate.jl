@@ -23,7 +23,7 @@ function svdupdate(F::SVD, A, B)
         r=minimum(r)-1
     end
 
-    Uᵣ=U[:,1:r]
+    Uᵣ=U[:,]
     Vᵣ=V[:,1:r]
     Sᵣ=S[1:r,1:r]
 
