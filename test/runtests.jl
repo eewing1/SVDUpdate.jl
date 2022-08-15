@@ -79,6 +79,28 @@ using Test
     Ŵ=svd(W₁)
     W̃=svdupdate(Ŵ,W₂,W₃)
     @test W̃.U*Diagonal(W̃.S)*W̃.V'≈W₁+W₂*W₃'
+    
+    #Test Case 8: Update to Tall Full Rank Matrix with HIGH condition number
+    m=50;n=45
+    p=5
+    G₁=rand(Complex{Float64},m,n)
+    G₁[:,n]=G₁[:,1]+1e-10*ones(m)
+    G₂=rand(Complex{Float64},m,p)
+    G₃=rand(Complex{Float64},n,p)
+    Ĝ=svd(G₁)
+    G̃=svdupdate(Ĝ,G₂,G₃)
+    G̃.U*Diagonal(G̃.S)*G̃.V'≈G₁+G₂*G₃'
+    
+    #Test Case 9: Update to Square matrix with HIGH condition number
+    m=150;n=150;p=60
+    H₁=rand(Complex{Float64},m,n)
+    H₁[:,n]=H₁[:,1]+1e-10*ones(m)
+    H₂=rand(Complex{Float64},m,p)
+    H₃=rand(Complex{Float64},n,p)
+    Ĥ=svd(H₁)
+    H̃=svdupdate(Ĥ,H₂,H₃)
+    H̃.U*Diagonal(H̃.S)*H̃.V'≈H₁+H₂*H₃'
+
 end
 
 #Creation of High Condition Number Matrices
