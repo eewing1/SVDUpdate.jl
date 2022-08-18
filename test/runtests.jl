@@ -24,8 +24,7 @@ using PSDMatrices
     #Test Case 2: Update to Positive Definite Matrix
     m=70;n=70;r=70
     p=40
-    Eᵩ=rand(m,n)
-    E₁=Matrix(PSDMatrix(m,n))
+    E₁=Matrix(PSDMatrix(rand(70,70)))
     E₂=rand(m,p)
     E₃=rand(n,p)
     Ê=svd(E₁)
