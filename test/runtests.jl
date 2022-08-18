@@ -21,7 +21,7 @@ using PSDMatrices
     Ỹ=svdupdate(Ŷ,Y₂,Y₃)
     @test Ỹ.U*Diagonal(Ỹ.S)*Ỹ.V'≈Y₁+Y₂*Y₃'
     
-    #Test Case 2: Update to Positive Definite Matrix
+    #Test Case 2: Update to Positive Semi Definite Matrix
     m=70;n=70;r=70
     p=40
     E₁=Matrix(PSDMatrix(rand(70,70)))
