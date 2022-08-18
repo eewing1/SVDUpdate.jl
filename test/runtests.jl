@@ -106,7 +106,6 @@ using PSDMatrices
     Ĥ=svd(H₁)
     H̃=svdupdate(Ĥ,H₂,H₃)
     @test H̃.U*Diagonal(H̃.S)*H̃.V'≈H₁+H₂*H₃'
-
 end
 
 
