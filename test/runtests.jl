@@ -1,5 +1,6 @@
 using SvdUpdate
 using Test
+using RandomMatrices
 
 #m=number of rows
 #n=number of columns
@@ -80,35 +81,33 @@ using Test
     W̃=svdupdate(Ŵ,W₂,W₃)
     @test W̃.U*Diagonal(W̃.S)*W̃.V'≈W₁+W₂*W₃'
     
-    #Test Case 8: Update to Tall Full Rank Matrix with HIGH condition number
-    m=50;n=45
-    p=5
-    G₁=rand(Complex{Float64},m,n)
-    G₁[:,n]=G₁[:,1]+1e-10*ones(m)
+    #Test Case 8: Update to Tall Full Rank Matrix with condition number 1000
+    m=120;n=90
+    p=60
+    Gₐ=rand(Haar(2),m)
+    Gₐ=Gₐ[1:m,1:n]
+    Gₛ=range(1,1e-3,n)
+    Gᵦ=rand(Haar(2),n)
+    G₁=Gₐ*Diagonal(Gₛ)*Gᵦ'
     G₂=rand(Complex{Float64},m,p)
     G₃=rand(Complex{Float64},n,p)
     Ĝ=svd(G₁)
     G̃=svdupdate(Ĝ,G₂,G₃)
-    G̃.U*Diagonal(G̃.S)*G̃.V'≈G₁+G₂*G₃'
+    @test G̃.U*Diagonal(G̃.S)*G̃.V'≈G₁+G₂*G₃'
     
-    #Test Case 9: Update to Square matrix with HIGH condition number
+    #Test Case 9: Update to Square matrix condition number 200
     m=150;n=150;p=60
-    H₁=rand(Complex{Float64},m,n)
-    H₁[:,n]=H₁[:,1]+1e-10*ones(m)
+    Hₐ=rand(Haar(2),m)
+    Hᵦ=rand(Haar(2),m)
+    Hₛ=range(1,0.005,m)
+    H₁=Hₐ*Diagonal(Hₛ)*Hᵦ'
     H₂=rand(Complex{Float64},m,p)
     H₃=rand(Complex{Float64},n,p)
     Ĥ=svd(H₁)
     H̃=svdupdate(Ĥ,H₂,H₃)
-    H̃.U*Diagonal(H̃.S)*H̃.V'≈H₁+H₂*H₃'
+    @test H̃.U*Diagonal(H̃.S)*H̃.V'≈H₁+H₂*H₃'
 
 end
-
-#Creation of High Condition Number Matrices
-C=rand(m,n)
-C[:,n]=C[:,1]+1e-10*ones(m)
-#this creates a matrix that is "Almost" rank deficient with a HUGE condition number
-#make the final column "Almost" equal to the first column by redefining it to the first column plus a very tiny offset O(1e-10)
-
 
 
 
