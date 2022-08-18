@@ -1,7 +1,7 @@
 using SvdUpdate
 using Test
 using RandomMatrices
-using PSD
+using PSDMatrices
 
 #m=number of rows
 #n=number of columns
