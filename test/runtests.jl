@@ -1,6 +1,7 @@
 using SvdUpdate
 using Test
 using RandomMatrices
+using PSD
 
 #m=number of rows
 #n=number of columns
@@ -24,7 +25,7 @@ using RandomMatrices
     m=70;n=70;r=70
     p=40
     Eᵩ=rand(m,n)
-    E₁=Hermitian(Eᵩ)*Eᵩ
+    E₁=PSDMatrix(70)
     E₂=rand(m,p)
     E₃=rand(n,p)
     Ê=svd(E₁)
