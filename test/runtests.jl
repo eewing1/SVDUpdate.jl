@@ -25,7 +25,7 @@ using PSDMatrices
     m=70;n=70;r=70
     p=40
     Eᵩ=rand(m,n)
-    E₁=PSDMatrix(70)
+    E₁=Matrix(PSDMatrix(m,n))
     E₂=rand(m,p)
     E₃=rand(n,p)
     Ê=svd(E₁)
