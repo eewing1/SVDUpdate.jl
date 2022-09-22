@@ -45,7 +45,7 @@ function svdupdate(F::SVD, A, B)
 
     #size of the array Ra, Rb
     rₐ₁=count(<(ê),  Rₐ₁)
-    rₐ₂=count(<ê), Rₐ₂)
+    rₐ₂=count(<(ê), Rₐ₂)
 
     #find dimensions of K, truncate K
     mₖ,nₖ=size(K)
@@ -58,13 +58,13 @@ function svdupdate(F::SVD, A, B)
 
     if qₐ==rₐ₁
         Qₐ=Matrix{Float64}(undef,size(U,1),0)
-    elseif size(Qₐ,2)>rₐ₁
+    elseif qₐ>rₐ₁
         Qₐ=Qₐ[:,1:(qₐ-rₐ₁)]
     end
 
     if qᵦ==rₐ₂
         Qᵦ=Matrix{Float64}(undef,size(V,1),0)
-    elseif size(Qᵦ,2)>rₐ₂
+    elseif qᵦ>rₐ₂
         Qᵦ=Qᵦ[:,1:(qᵦ-rₐ₂)]
     end
 
