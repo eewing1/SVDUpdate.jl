@@ -12,20 +12,16 @@ function svdupdate(F::SVD, A, B)
     ê=σ₁*ϵₘ
 
     #remove all the left/right sing. vectors that have tiny sing. values
-    #r=minimum(findall(svd(X).S.<10^-10
-    r=findall(F.S.<ê)
+    #count function counts number of elements of F.S that satisfy condition <ehat
+    r=count(<(ê), F.S)
 
     #test if matrix is rank deficient or full rank
-    #r is an array of singular values that are TINY
-    if isempty(r)
-        r=size(F.U,2)
-    else
-        r=minimum(r)-1
-    end
+    #r is an array telling us how many rank deficient singular values
+        #how many singular vectors should be chopped off U, V
 
-    Uᵣ=U[:, 1:r]
-    Vᵣ=V[:,1:r]
-    Sᵣ=S[1:r,1:r]
+    Uᵣ=U[:, 1:size(U,2)-r]
+    Vᵣ=V[:,1:size(V,2)-r]
+    Sᵣ=S[1:size(S,1)-r,1:size(S,1)-r]
 
     #compute the Q, R matrices
     Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
@@ -48,8 +44,8 @@ function svdupdate(F::SVD, A, B)
     Rₐ₂=abs.(diag(Rᵦ))
 
     #size of the array Ra, Rb
-    rₐ₁=size((findall(Rₐ₁.<ê)),1)
-    rₐ₂=size((findall(Rₐ₂.<ê)),1)
+    rₐ₁=count(<(ê),  Rₐ₁)
+    rₐ₂=count(<ê), Rₐ₂)
 
     #find dimensions of K, truncate K
     mₖ,nₖ=size(K)
