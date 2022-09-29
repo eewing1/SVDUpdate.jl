@@ -20,8 +20,6 @@ function svdupdate(F::SVD, A, B)
     uᵣ= size(U,2)-r
     vᵣ=size(V,2)-r
     sᵣ=size(S,2)-r
-    #Vᵣ=V[:,1:size(V,2)-r]
-   # Sᵣ=S[1:s,1:s]
 
     #compute the Q, R matrices
     Qₐ,Rₐ=qr(A-(@views U[:, 1:uᵣ])*(@views U[:, 1:uᵣ])'*A)
