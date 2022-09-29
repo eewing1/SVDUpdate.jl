@@ -1,7 +1,5 @@
 module SvdUpdate
 
-using LinearAlgebra
-# Write your package code here.
 function svdupdate(F::SVD, A, B)
     U=F.U
     S=Diagonal(F.S)
@@ -18,38 +16,42 @@ function svdupdate(F::SVD, A, B)
     #test if matrix is rank deficient or full rank
     #r is an array telling us how many rank deficient singular values
         #how many singular vectors should be chopped off U, V
-
-    Uᵣ=U[:, 1:size(U,2)-r]
-    Vᵣ=V[:,1:size(V,2)-r]
-    Sᵣ=S[1:size(S,1)-r,1:size(S,1)-r]
+    
+    uᵣ= size(U,2)-r
+    vᵣ=size(V,2)-r
+    sᵣ=size(S,2)-r
+    #Vᵣ=V[:,1:size(V,2)-r]
+   # Sᵣ=S[1:s,1:s]
 
     #compute the Q, R matrices
-    Qₐ,Rₐ=qr(A-Uᵣ*Uᵣ'*A)
-    Qᵦ,Rᵦ=qr(B-Vᵣ*Vᵣ'*B)
+    Qₐ,Rₐ=qr(A-(@views U[:, 1:uᵣ])*(@views U[:, 1:uᵣ])'*A)
+    Qᵦ,Rᵦ=qr(B-(@views V[:,1:vᵣ])*(@views V[:,1:vᵣ])'*B)
 
     #convert "full" Q matrices into "thin" matrices that match dimensions of A,B
     #the Q that is returned by the qr function is not what we're looking for
     Qₐ=Matrix(Qₐ)
     Qᵦ=Matrix(Qᵦ)
+    
 
     #build the K matrix
-    K₁=Sᵣ+Uᵣ'*A*B'*Vᵣ
-    K₂=Uᵣ'*A*Rᵦ'
-    K₃=Rₐ*B'*Vᵣ
+    K₁=(@views S[1:sᵣ,1:sᵣ])+(@views U[:,1:uᵣ])'*A*B'*(@views V[:,1:vᵣ])
+    K₂=(@views U[:,1:uᵣ])'*A*Rᵦ'
+    K₃=Rₐ*B'*(@views V[:,1:vᵣ])
     K₄=Rₐ*Rᵦ'
     K=[K₁ K₂;K₃ K₄]
 
     #build arrays whose entries are diagonals of Ra,Rb
-    Rₐ₁=abs.(diag(Rₐ))
-    Rₐ₂=abs.(diag(Rᵦ))
+    rₐ₁=count(<(ê), abs(Rₐ[i,i]) for i in minimum(axes(Rₐ)))
+    rₐ₂=count(<(ê), abs(Rᵦ[i,i]) for i in minimum(axes(Rᵦ)))
 
-    #size of the array Ra, Rb
-    rₐ₁=count(<(ê),  Rₐ₁)
-    rₐ₂=count(<(ê), Rₐ₂)
+    
 
     #find dimensions of K, truncate K
     mₖ,nₖ=size(K)
-    K=K[1:(mₖ-rₐ₁),1:(nₖ-rₐ₂)]
+    
+    kᵣ=(mₖ-rₐ₁)
+    kₙ=(nₖ-rₐ₂)
+    @views K[1:kᵣ,1:kₙ]
 
     #number of columns of Qa, Qb
     qₐ=size(Matrix(Qₐ),2)
@@ -71,8 +73,9 @@ function svdupdate(F::SVD, A, B)
 
 
     #compute the SVD of K
-    Uₖ,Sₖ,Vₖ=svd(K)
+    Uₖ,Sₖ,Vₖ=svd(@views K[1:kᵣ,1:kₙ])
 
-    SVD(([Uᵣ Qₐ]*Uₖ), Sₖ, ([Vᵣ Qᵦ]*Vₖ)');
+   SVD([(@views U[:, 1:uᵣ]) Qₐ]*Uₖ, Sₖ, ([(@views V[:, 1:vᵣ]) Qᵦ]*Vₖ)')
+    
 end
 end # module
