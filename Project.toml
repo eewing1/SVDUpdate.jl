@@ -3,6 +3,9 @@ uuid = "00600bf9-e2c8-41b4-a7c0-9cf4fcbceb57"
 authors = ["Evan Ewing <eewing@mit.edu> and contributors"]
 version = "0.1.0"
 
+[deps]
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+
 [compat]
 julia = "1.8"
 
