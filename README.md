@@ -9,5 +9,6 @@
 
 This is a package based on the algorithm/identities created by Brand in the paper "Fast Low Rank Modifications of the Thin Singular Value Decomposition." The rough idea is as follows:
 
-Given some matrix $X$, computing the svd of the matrix is an expensive, an $O(n^3)$ operation for an n by n matrix. Suppose we already have the singular value decomposition $X=U\Sigma V^{H}$. Suppose we make some additive modification to the original matrix X, such as:
+Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensive, an $O(n^3)$ operation for an n by n matrix. Suppose we already have the singular value decomposition $X=U\Sigma V^{H}$. Suppose we make some additive modification to the original matrix X, such as:
 $$X+AB^{H}$$
+Here, $A\in R^{mxq}$, anad $B\in{nxq}$
