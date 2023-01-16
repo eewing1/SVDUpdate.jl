@@ -14,6 +14,6 @@ The outline is as follows:
 
 Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensive, an $O(n^3)$ operation for an n by n matrix. Suppose we already have the singular value decomposition $X=U\Sigma V^{H}$. Suppose we make some additive modification to the original matrix X, such as:
 $$X+AB^{H}$$
-Here, $A\in R^{mxq}$, anad $B\in^{nxq}$
-If we wish to compute the svd of this new matrix, Brand's paper provides the following formula:
-$$\left[\begin{array}{cc} 1 & 0\\0 & 1\\ \end{array}\right]$$
+Here, $A\in R^{mxq}$, and $B\in^{nxq}$
+If we wish to compute the svd of this new matrix, Brand's paper gives an identity/formula to compute the $U,\Sigma, V$ matrices without actually having to use the svd function on the matrix $X+AB^H$.
+$$X+AB^H=U'\Sigma 'V^{H}'$$
