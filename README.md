@@ -16,4 +16,4 @@ Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensiv
 $$X+AB^{H}$$
 Here, $A\in R^{mxq}$, and $B\in^{nxq}$
 If we wish to compute the svd of this new matrix, Brand's paper gives an identity/formula to compute the $U,\Sigma, V$ matrices without actually having to use the svd function on the matrix $X+AB^H$.
-$$X+AB^H=U'\Sigma' V^{H}'$$
+$$X+AB^H=U'\Sigma' V^{H'}$$
