@@ -13,6 +13,3 @@ Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensiv
 $$X+AB^{H}$$
 Here, $A\in R^{mxq}$, anad $B\in^{nxq}$
 If we wish to compute the svd of this new matrix, Brand's paper provides the following formula:
-$$\begin{pmatrix} U&A\end{pmatrix}
-\begin{pmatrix} \Sigma & 0\\0&I\end{pmatrix}
-\begin{pmatrix} V&B\end{pmatrix}^H$$
