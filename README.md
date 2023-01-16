@@ -11,4 +11,11 @@ This is a package based on the algorithm/identities created by Brand in the pape
 
 Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensive, an $O(n^3)$ operation for an n by n matrix. Suppose we already have the singular value decomposition $X=U\Sigma V^{H}$. Suppose we make some additive modification to the original matrix X, such as:
 $$X+AB^{H}$$
-Here, $A\in R^{mxq}$, anad $B\in{nxq}$
+Here, $A\in R^{mxq}$, anad $B\in^{nxq}$
+If we wish to compute the svd of this new matrix, Brand's paper provides the following formula:
+$$
+X+A{B^H}=
+\begin{pmatrix} U&A\end{pmatrix}
+\begin{pmatrix} \Sigma & 0\\0&I\end{pmatrix}
+\begin{pmatrix} V&B\end{pmatrix}^H
+$$
