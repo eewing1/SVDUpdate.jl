@@ -13,3 +13,4 @@ Given some matrix $X\in R^{mxn}$, computing the svd of the matrix is an expensiv
 $$X+AB^{H}$$
 Here, $A\in R^{mxq}$, anad $B\in^{nxq}$
 If we wish to compute the svd of this new matrix, Brand's paper provides the following formula:
+$$X+AB^{H}$$
