@@ -18,3 +18,7 @@ Here, $A\in R^{mxq}$, and $B\in^{nxq}$
 If we wish to compute the svd of this new matrix, Brand's paper gives an identity/formula to compute the $U,\Sigma, V$ matrices without actually having to use the svd function on the matrix $X+AB^H$. Our function `svdupdate()` uses Brand's formula/algorithm to approximate the svd of the new matrix $X+AB^H$, given the svd of $X$.
 
 #How to use the Function
+Given three matrices $X\in R^{mxn}$,  $A\in R^{mxq}$, $B\in^{nxq}$, the following operation will return an SVD object of $X+AB^H$
+```julia
+svdupdate(svd(X),A,B)
+```
